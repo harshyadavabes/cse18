@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>End-Sem Unit Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+    }
+
+    h1, h3 {
+      text-align: center;
+    }
+
+    h3 {
+      color: #555;
+      margin-bottom: 25px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    .subject {
+      margin-bottom: 20px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+
+    .subject h4 {
+      margin-bottom: 10px;
+    }
+
+    .units {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    label {
+      cursor: pointer;
+    }
+
+    .progress {
+      margin-top: 25px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .bar {
+      height: 20px;
+      background: #e0e0e0;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .bar-fill {
+      height: 100%;
+      width: 0%;
+      background: #4CAF50;
+      transition: width 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+
+<h1>End-Sem Learning Tracker</h1>
+<h3>Exam starts: 29 December | Total Units: 30</h3>
+
+<div class="container">
+
+  <!-- SUBJECTS -->
+  <div class="subject"><h4>Applied Physics</h4><div class="units">
+    <label><input type="checkbox"> Unit 1</label>
+    <label><input type="checkbox"> Unit 2</label>
+    <label><input type="checkbox"> Unit 3</label>
+    <label><input type="checkbox"> Unit 4</label>
+    <label><input type="checkbox"> Unit 5</label>
+  </div></div>
+
+  <div class="subject"><h4>Electrical Engineering</h4><div class="units">
+    <label><input type="checkbox"> Unit 1</label>
+    <label><input type="checkbox"> Unit 2</label>
+    <label><input type="checkbox"> Unit 3</label>
+    <label><input type="checkbox"> Unit 4</label>
+    <label><input type="checkbox"> Unit 5</label>
+  </div></div>
+
+  <div class="subject"><h4>Artificial Intelligence</h4><div class="units">
+    <label><input type="checkbox"> Unit 1</label>
+    <label><input type="checkbox"> Unit 2</label>
+    <label><input type="checkbox"> Unit 3</label>
+    <label><input type="checkbox"> Unit 4</label>
+    <label><input type="checkbox"> Unit 5</label>
+  </div></div>
+
+  <div class="subject"><h4>Statistics</h4><div class="units">
+    <label><input type="checkbox"> Unit 1</label>
+    <label><input type="checkbox"> Unit 2</label>
+    <label><input type="checkbox"> Unit 3</label>
+    <label><input type="checkbox"> Unit 4</label>
+    <label><input type="checkbox"> Unit 5</label>
+  </div></div>
+
+  <div class="subject"><h4>DSA</h4><div class="units">
+    <label><input type="checkbox"> Unit 1</label>
+    <label><input type="checkbox"> Unit 2</label>
+    <label><input type="checkbox"> Unit 3</label>
+    <label><input type="checkbox"> Unit 4</label>
+    <label><input type="checkbox"> Unit 5</label>
+  </div></div>
+
+  <div class="subject"><h4>EVS</h4><div class="units">
+    <label><input type="checkbox"> Unit 1</label>
+    <label><input type="checkbox"> Unit 2</label>
+    <label><input type="checkbox"> Unit 3</label>
+    <label><input type="checkbox"> Unit 4</label>
+    <label><input type="checkbox"> Unit 5</label>
+  </div></div>
+
+  <!-- PROGRESS -->
+  <div class="progress">
+    Progress: <span id="done">0</span> / 30 Units
+    <div class="bar">
+      <div class="bar-fill" id="barFill"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+  function updateProgress() {
+    const checked = document.querySelectorAll('input[type="checkbox"]:checked').length;
+    document.getElementById('done').textContent = checked;
+    document.getElementById('barFill').style.width = (checked / 30) * 100 + '%';
+  }
+
+  function saveProgress() {
+    const states = [];
+    checkboxes.forEach(cb => states.push(cb.checked));
+    localStorage.setItem('unitProgress', JSON.stringify(states));
+  }
+
+  function loadProgress() {
+    const saved = JSON.parse(localStorage.getItem('unitProgress'));
+    if (saved) {
+      checkboxes.forEach((cb, i) => cb.checked = saved[i]);
+    }
+    updateProgress();
+  }
+
+  checkboxes.forEach(cb => {
+    cb.addEventListener('change', () => {
+      updateProgress();
+      saveProgress();
+    });
+  });
+
+  loadProgress();
+</script>
+
+</body>
+</html>
